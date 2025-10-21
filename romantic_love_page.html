@@ -1,0 +1,263 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>can't take eyes off you</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;500&family=Inter:wght@300;400&display=swap" rel="stylesheet">
+    
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
+            background-color: #FFF8F6;
+            background-image: 
+                radial-gradient(circle at 20% 80%, rgba(246, 215, 221, 0.15) 0%, transparent 50%),
+                radial-gradient(circle at 80% 20%, rgba(212, 175, 127, 0.08) 0%, transparent 50%),
+                url('data:image/svg+xml;utf8,<svg xmlns="http://www.w3.org/2000/svg" width="100" height="100" viewBox="0 0 100 100"><defs><filter id="noise"><feTurbulence type="fractalNoise" baseFrequency="0.9" numOctaves="4" stitchTiles="stitch"/><feColorMatrix type="saturate" values="0"/></filter></defs><rect width="100" height="100" filter="url(%23noise)" opacity="0.03"/></svg>');
+            background-attachment: fixed;
+            min-height: 100vh;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            padding: 2rem;
+            overflow-x: hidden;
+            position: relative;
+        }
+
+        /* Subtle vignette overlay */
+        body::before {
+            content: '';
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: radial-gradient(ellipse at center, transparent 0%, rgba(255, 248, 246, 0.4) 100%);
+            pointer-events: none;
+            z-index: 0;
+        }
+
+        .container {
+            position: relative;
+            z-index: 1;
+            max-width: 900px;
+            width: 100%;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            gap: 3rem;
+        }
+
+        .headline {
+            font-family: 'Playfair Display', Georgia, serif;
+            font-size: clamp(2.5rem, 8vw, 5.5rem);
+            font-weight: 400;
+            color: #3D2F2F;
+            text-align: center;
+            letter-spacing: 0.08em;
+            line-height: 1.3;
+            position: relative;
+            opacity: 0;
+            transform: translateY(30px);
+            animation: fadeSlideUp 700ms ease-out forwards;
+            max-width: 90%;
+        }
+
+        @keyframes fadeSlideUp {
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        /* Optional sparkle accent */
+        .headline::after {
+            content: '✨';
+            position: absolute;
+            top: -1.2rem;
+            right: -1.5rem;
+            font-size: clamp(1.2rem, 3vw, 2rem);
+            opacity: 0;
+            animation: sparkle 2s ease-in-out 1s infinite;
+        }
+
+        @keyframes sparkle {
+            0%, 100% {
+                opacity: 0;
+                transform: scale(0.8) rotate(0deg);
+            }
+            50% {
+                opacity: 0.6;
+                transform: scale(1.1) rotate(20deg);
+            }
+        }
+
+        .photo-container {
+            position: relative;
+            opacity: 0;
+            animation: fadeIn 800ms ease-out 250ms forwards;
+            max-width: 500px;
+            width: 100%;
+        }
+
+        @keyframes fadeIn {
+            to {
+                opacity: 1;
+            }
+        }
+
+        .photo-frame {
+            position: relative;
+            width: 100%;
+            border-radius: 2rem;
+            overflow: hidden;
+            border: 3px solid #D4AF7F;
+            box-shadow: 
+                0 10px 40px rgba(212, 175, 127, 0.15),
+                0 4px 12px rgba(61, 47, 47, 0.08);
+            transition: transform 0.5s ease, box-shadow 0.5s ease;
+        }
+
+        .photo-frame:hover {
+            transform: translateY(-4px) scale(1.01);
+            box-shadow: 
+                0 15px 50px rgba(212, 175, 127, 0.2),
+                0 6px 16px rgba(61, 47, 47, 0.12);
+        }
+
+        .photo-frame img {
+            display: block;
+            width: 100%;
+            height: auto;
+            object-fit: cover;
+            filter: brightness(1.02) contrast(0.98);
+        }
+
+        /* Responsive adjustments */
+        @media (max-width: 768px) {
+            body {
+                padding: 1.5rem;
+            }
+
+            .container {
+                gap: 2rem;
+            }
+
+            .headline {
+                letter-spacing: 0.05em;
+                max-width: 100%;
+            }
+
+            .headline::after {
+                right: -1rem;
+                top: -0.8rem;
+            }
+
+            .photo-container {
+                max-width: 100%;
+            }
+
+            .photo-frame {
+                border-radius: 1.5rem;
+                border-width: 2px;
+            }
+        }
+
+        @media (max-width: 480px) {
+            body {
+                padding: 1rem;
+            }
+
+            .container {
+                gap: 1.5rem;
+            }
+
+            .headline::after {
+                font-size: 1rem;
+                right: -0.5rem;
+                top: -0.5rem;
+            }
+
+            .photo-frame {
+                border-radius: 1.2rem;
+            }
+        }
+
+        /* Respect reduced motion preferences */
+        @media (prefers-reduced-motion: reduce) {
+            .headline,
+            .photo-container {
+                animation: none;
+                opacity: 1;
+                transform: none;
+            }
+
+            .headline::after {
+                animation: none;
+                opacity: 0.5;
+            }
+
+            .photo-frame:hover {
+                transform: none;
+            }
+        }
+
+        /* High contrast mode support */
+        @media (prefers-contrast: high) {
+            .headline {
+                color: #000000;
+            }
+
+            .photo-frame {
+                border-width: 4px;
+                border-color: #8B7355;
+            }
+        }
+
+        /* Print styles */
+        @media print {
+            body {
+                background: white;
+            }
+
+            body::before {
+                display: none;
+            }
+
+            .headline::after {
+                display: none;
+            }
+
+            .photo-frame {
+                box-shadow: none;
+                page-break-inside: avoid;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1 class="headline">can't take eyes off you</h1>
+        
+        <div class="photo-container">
+            <div class="photo-frame">
+                <img 
+                    src="https://raw.githubusercontent.com/maryam-FOLDS/She/main/Gemini_Generated_Image_bwqhg0bwqhg0bwqh.png" 
+                    alt="romantic portrait"
+                    loading="lazy"
+                    onerror="this.style.display='none'; this.parentElement.innerHTML='<div style=\'padding:4rem;text-align:center;color:#3D2F2F;font-family:Inter,sans-serif;\'>Image could not be loaded</div>';"
+                >
+            </div>
+        </div>
+    </div>
+</body>
+</html>
